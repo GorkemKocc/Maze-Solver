@@ -24,6 +24,9 @@ namespace maze_form
         private System.Windows.Forms.Control.ControlCollection Control { get; set; }
         private List<Tuple<int, int>> path = new List<Tuple<int, int>>();
         private List<Tuple<int, int>> mainPath = new List<Tuple<int, int>>();
+        public History mazeHistory = new History();
+
+
         public Maze(int rows, int cols, System.Windows.Forms.Control.ControlCollection control)
         {
             Control = control;
@@ -136,8 +139,8 @@ namespace maze_form
             Button finishButton = new Button();
             finishButton.Enabled = false;
             finishButton.Text = "Sonuç";
-            finishButton.Size = new Size(100, 50);
-            finishButton.Location = new Point(260 + Rows * 25, 60 + (Cols * 25) / 2);
+            finishButton.Size = new Size(150, 70);
+            finishButton.Location = new Point(295 + Rows * 25, 10 + (Cols * 25) / 2);
             Control.Add(finishButton);
 
             finishButton.Click += (sender, args) =>
@@ -147,8 +150,8 @@ namespace maze_form
 
             Button startButton = new Button();
             startButton.Text = "Başla";
-            startButton.Size = new Size(100, 50);
-            startButton.Location = new Point(150 + Rows * 25, 60 + (Cols * 25) / 2);
+            startButton.Size = new Size(150, 70);
+            startButton.Location = new Point(130 + Rows * 25, 10 + (Cols * 25) / 2);
             Control.Add(startButton);
 
             startButton.Click += (sender, args) =>
@@ -203,12 +206,6 @@ namespace maze_form
 
         public async void ShowPath()
         {
-            Button time = new Button();
-            time.Text = "Süre";
-            time.Size = new Size(100, 50);
-            time.Location = new Point(260 + Rows * 25, 120 + (Cols * 25) / 2);
-            Control.Add(time);
-
             mainPath.Add(new Tuple<int, int>(End.Item1, End.Item2));
             Robot robot = new Robot(Cells, path, mainPath, Start, End);
             foreach (var item in path)
@@ -223,7 +220,7 @@ namespace maze_form
                 await Task.Delay(delay / 2);
                 Cells[item.Item1, item.Item2].Button.BackColor = Color.Yellow;
             }
-            time.Text = "Geçen süre " + path.Count + "sn";
+            mazeHistory.showMazeElapsedTime(Cells, path, Control);
         }
 
         public async void showAround(int x, int y)

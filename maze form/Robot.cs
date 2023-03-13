@@ -20,6 +20,7 @@ namespace maze_form
         List<Tuple<int, int>> path = new List<Tuple<int, int>>();
         List<Tuple<int, int>> mainPath = new List<Tuple<int, int>>();
 
+
         public Robot(Cell[,] maze, List<Tuple<int, int>> path, List<Tuple<int, int>> mainPath, Tuple<int, int> start, Tuple<int, int> end)
         {
             this.maze = maze;
@@ -74,6 +75,7 @@ namespace maze_form
         int pathTime = 0;
         private int delay = 300;
 
+        public History mazeHistory = new History();
         List<Tuple<int, int>> bfsPath = new List<Tuple<int, int>>();
         HashSet<Tuple<int, int>> visited = new HashSet<Tuple<int, int>>();
         Dictionary<Tuple<int, int>, Tuple<int, int>> parent = new Dictionary<Tuple<int, int>, Tuple<int, int>>();
@@ -218,11 +220,6 @@ namespace maze_form
         }
         private async void showPath()
         {
-            Button time = new Button();
-            time.Location = new Point(370 + cols * 35, -20 + (rows * 35) / 2);
-            time.Text = "Süre: ";
-            time.Size = new Size(150, 70);
-            Controls.Add(time);
 
             foreach (Tuple<int, int> pair in mainPath)
             {
@@ -242,7 +239,8 @@ namespace maze_form
                 await Task.Delay(delay / 2);
             }
 
-            time.Text = "Süre: " + pathTime + " sn";
+            mazeHistory.showGripElapsedTime(grid, path, Controls);
+
         }
     }
 }

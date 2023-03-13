@@ -28,24 +28,22 @@ namespace WinFormsApp3
             {
                 txt = text + txt;
             }
-            int satir = File.ReadAllLines(textfile).Length;
-
+            rows = File.ReadAllLines(textfile).Length;
+            columns = (txt.Length) / rows;
             streamReader.Close();
+
             int a = 0;
-            int sutun = (txt.Length) / satir;
-            satir = satir + 2;
-            sutun = sutun + 2;
-            Cells = new Cell[satir, sutun];
-
-
+            rows = rows + 2;
+            columns = columns + 2;
+            Cells = new Cell[rows, columns];
 
             while (a < txt.Length)
             {
-                for (int i = satir - 1; i >= 0; i--)
+                for (int i = rows - 1; i >= 0; i--)
                 {
-                    for (int j = 0; j < sutun; j++)
+                    for (int j = 0; j < columns; j++)
                     {
-                        if (i == 0 || i == satir - 1 || j == 0 || j == sutun - 1)
+                        if (i == 0 || i == rows - 1 || j == 0 || j == columns - 1)
                         {
 
                             Cells[i, j] = new Wall();
@@ -61,7 +59,6 @@ namespace WinFormsApp3
                                 Cells[i, j].Wall = true;
                             }
 
-
                             if (txt[a] == '2')
                                 if (Cells[i, j] == null)
                                 {
@@ -70,7 +67,6 @@ namespace WinFormsApp3
                                     Cells[i, j + 1] = new Block_2();
                                     Cells[i, j + 1].Button.BackColor = Color.Green;
                                 }
-
 
                             if (txt[a] == '3')
                                 if (Cells[i, j] == null)
@@ -82,30 +78,22 @@ namespace WinFormsApp3
                                     Cells[i - 2, j] = new Block_3();
                                     Cells[i - 2, j].Button.BackColor = Color.Green;
                                 }
-
-
                             a++;
                         }
-
-
-
                     }
                 }
             }
-            GridGenerate(control, satir, sutun);
+            GridGenerate(control);
 
         }
 
-        public async void GridGenerate(System.Windows.Forms.Control.ControlCollection control, int satir, int sutun)
+        public async void GridGenerate(System.Windows.Forms.Control.ControlCollection control)
         {
 
             Random rand = new Random();
             int x = 0;
             while (x < 2)
             {
-                rows = Cells.GetLength(0);
-                columns = Cells.GetLength(1);
-
                 int randomRow = rand.Next(rows);
                 int randomColumn = rand.Next(columns);
 
@@ -129,14 +117,13 @@ namespace WinFormsApp3
             }
 
 
-            for (int i = 0; i < satir; i++)
+            for (int i = 0; i < rows; i++)
             {
-                for (int j = 0; j < sutun; j++)
+                for (int j = 0; j < columns; j++)
                 {
                     Cells[i, j].Button.Location = new Point(100 + j * 35, 60 + i * 35);
                     control.Add(Cells[i, j].Button);
                 }
-
             }
 
 

@@ -16,7 +16,7 @@ namespace maze_form
         private string textfile = @"C:\Users\isgor\OneDrive\Masaüstü\proje\url1.txt";
         private string url1 = @"C:\Users\isgor\OneDrive\Masaüstü\proje\url1.txt";
         private string url2 = @"C:\Users\isgor\OneDrive\Masaüstü\proje\url2.txt";
-
+        public History mazeHistory = new History();
 
         public Problem_1()
         {
@@ -37,6 +37,7 @@ namespace maze_form
                 List<Tuple<int, int>> path = new List<Tuple<int, int>>();
                 List<Tuple<int, int>> mainPath = new List<Tuple<int, int>>();
                 Robot robot = new Robot(g.Cells, path, mainPath, g.start_X, g.start_Y, g.end_X, g.end_Y, this.Controls);
+                robot.mazeHistory = mazeHistory;
             };
             Button button = new Button();
             button.Location = new Point(200 + g.columns * 35, 60 + (g.rows * 35) / 2);
@@ -44,6 +45,7 @@ namespace maze_form
             button.Text = "URL değiştir";
             button.Click += (sender, args) =>
             {
+
                 Controls.Clear();
                 g = new grid();
                 if (String.Equals(textfile, url1))
@@ -75,7 +77,6 @@ namespace maze_form
             Controls.Add(exit);
             exit.Click += (sender, args) =>
             {
-                //Controls.Clear();
                 Visible = false;
             };
         }
