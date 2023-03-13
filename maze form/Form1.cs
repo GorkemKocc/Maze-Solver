@@ -29,12 +29,12 @@ namespace maze_form
         {
             Maze maze = new Maze(row, col, problem2.Controls);
             maze.Generate();
-            Button restart = new Button();
-            restart.Text = "Çýkýþ";
-            restart.Size = new Size(100, 50);
-            restart.Location = new Point(150 + row * 25, 120 + (col * 25) / 2);
-            problem2.Controls.Add(restart);
-            restart.Click += (sender, args) =>
+            Button exit = new Button();
+            exit.Text = "Çýkýþ";
+            exit.Size = new Size(100, 50);
+            exit.Location = new Point(150 + row * 25, 120 + (col * 25) / 2);
+            problem2.Controls.Add(exit);
+            exit.Click += (sender, args) =>
             {
                 problem2.Controls.Clear();
 
@@ -43,5 +43,6 @@ namespace maze_form
             };
 
         }
+
     }
 }

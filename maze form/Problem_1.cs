@@ -16,7 +16,7 @@ namespace maze_form
         private string textfile = @"C:\Users\isgor\OneDrive\Masaüstü\proje\url1.txt";
         private string url1 = @"C:\Users\isgor\OneDrive\Masaüstü\proje\url1.txt";
         private string url2 = @"C:\Users\isgor\OneDrive\Masaüstü\proje\url2.txt";
-        public int row, col;
+
 
         public Problem_1()
         {
@@ -26,6 +26,7 @@ namespace maze_form
             g.textfile = this.textfile;
             g.TextFileReader(control);
             InitializeComponent();
+            Button exit = new Button();
             Button start = new Button();
             start.Location = new Point(370 + g.columns * 35, 60 + (g.rows * 35) / 2);
             start.Size = new Size(150, 70);
@@ -60,16 +61,23 @@ namespace maze_form
                 Controls.Add(start);
                 button.Location = new Point(200 + g.columns * 35, 60 + (g.rows * 35) / 2);
                 start.Location = new Point(370 + g.columns * 35, 60 + (g.rows * 35) / 2);
+                exit.Location = new Point(540 + g.columns * 35, 60 + (g.rows * 35) / 2);
 
+                Controls.Add(exit);
                 Controls.Add(button);
             };
 
-
-
             Controls.Add(button);
 
-
-            //  InitializeComponent();
+            exit.Text = "Çıkış";
+            exit.Size = new Size(150, 70);
+            exit.Location = new Point(540 + g.columns * 35, 60 + (g.rows * 35) / 2);
+            Controls.Add(exit);
+            exit.Click += (sender, args) =>
+            {
+                //Controls.Clear();
+                Visible = false;
+            };
         }
 
         private void Problem_1_Load(object sender, EventArgs e)
