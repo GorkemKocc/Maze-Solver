@@ -65,7 +65,8 @@ namespace maze_form
         }
 
 
-        ///////////////////////////////
+
+        ////////////////////////////////// 
 
         private Cell[,] grid;
         private int start_X;
@@ -74,8 +75,7 @@ namespace maze_form
         private int end_Y;
         int pathTime = 0;
         private int delay = 300;
-
-        public History mazeHistory = new History();
+        public History gridHistory = new History();
         List<Tuple<int, int>> bfsPath = new List<Tuple<int, int>>();
         HashSet<Tuple<int, int>> visited = new HashSet<Tuple<int, int>>();
         Dictionary<Tuple<int, int>, Tuple<int, int>> parent = new Dictionary<Tuple<int, int>, Tuple<int, int>>();
@@ -98,31 +98,26 @@ namespace maze_form
 
         public void gridSolve()
         {
-            // başlangıç ve bitiş noktalarını belirleyelim
+
             Tuple<int, int> start = Tuple.Create(start_X, start_Y);
             Tuple<int, int> end = Tuple.Create(end_X, end_Y);
             parent[start] = null;
-            // BFS algoritması için gereken kuyruk (queue) ve ziyaret edilen (visited) noktaları tanımlayalım
+
             Queue<Tuple<int, int>> queue = new Queue<Tuple<int, int>>();
 
 
-            // başlangıç noktasını kuyruğa ekleyelim ve ziyaret edildi olarak işaretleyelim
             queue.Enqueue(start);
             visited.Add(start);
 
-            // ana döngü
             while (queue.Count > 0)
             {
-                // kuyruktan bir sonraki noktayı alalım
                 Tuple<int, int> currentPoint = queue.Dequeue();
 
-                // eğer bitiş noktasına ulaşılmışsa döngüyü sonlandıralım
                 if (currentPoint.Equals(end))
                 {
                     break;
                 }
 
-                // mevcut noktanın komşularını bulalım
                 int i = currentPoint.Item1;
                 int j = currentPoint.Item2;
                 List<Tuple<int, int>> neighbors = new List<Tuple<int, int>> {
@@ -131,8 +126,6 @@ namespace maze_form
                 Tuple.Create(i, j-1),
                 Tuple.Create(i, j+1)
             };
-
-                // add unvisited neighbors to queue and mark as visited
 
                 foreach (Tuple<int, int> neighbor in neighbors)
                 {
@@ -147,7 +140,6 @@ namespace maze_form
 
             }
 
-            // print shortest path
             List<Tuple<int, int>> path = GetShortestPath(start, end);
             Console.Write("Shortest path: ");
             foreach (Tuple<int, int> point in path)
@@ -199,7 +191,6 @@ namespace maze_form
             showPath();
         }
 
-        // helper function to get shortest path as a list of points
         public List<Tuple<int, int>> GetShortestPath(Tuple<int, int> start, Tuple<int, int> end)
         {
             Tuple<int, int> current = end;
@@ -223,27 +214,139 @@ namespace maze_form
 
             foreach (Tuple<int, int> pair in mainPath)
             {
-                grid[start_X, start_Y].Button.BackColor = Color.Blue;
+                showAround(pair.Item1, pair.Item2);
+
+                grid[start_X, start_Y].Button.BackColor = Color.Orange;
+                grid[start_X, start_Y].Button.Text = "Start";
                 grid[pair.Item1, pair.Item2].Button.BackColor = Color.Yellow;
                 grid[end_X, end_Y].Button.BackColor = Color.Red;
-
-
-
-                await Task.Delay(delay);
+                grid[end_X, end_Y].Button.Text = "Finish";
+                await Task.Delay(delay * 2);
             }
+
             foreach (Tuple<int, int> pair in path)
             {
-                grid[start_X, start_Y].Button.BackColor = Color.Blue;
+                grid[start_X, start_Y].Button.BackColor = Color.Orange;
+                grid[start_X, start_Y].Button.Text = "Start";
                 grid[pair.Item1, pair.Item2].Button.BackColor = Color.Purple;
                 grid[end_X, end_Y].Button.BackColor = Color.Red;
+                grid[end_X, end_Y].Button.Text = "Finish";
                 await Task.Delay(delay / 2);
             }
-
-            mazeHistory.showGripElapsedTime(grid, path, Controls);
+            gridHistory.showGridElapsedTime(grid, path, Controls);
 
         }
+        public void showAround(int x, int y)
+        {
+            for (var i = -1; i < 2; i++)
+            {
+                if (IsValid(x, y, i) && grid[x + i, y] is Cell)
+                {
+                    grid[x + i, y].Button.BackColor = Color.White;
+                    grid[x + i, y].Button.Text = "0";
+                }
+
+                if (IsValid(x, y, i) && grid[x, y + i] is Cell)
+                {
+                    grid[x, y + i].Button.BackColor = Color.White;
+                    grid[x, y + i].Button.Text = "0";
+                }
+
+                if (IsValid(x, y, i) && grid[x + i, y] is Wall)
+                {
+                    grid[x + i, y].Button.BackColor = Color.Black;
+                }
+
+                if (IsValid(x, y, i) && grid[x, y + i] is Wall)
+                {
+                    grid[x, y + i].Button.BackColor = Color.Black;
+                }
+
+                if (IsValid(x, y, i) && grid[x + i, y] is Block1)
+                {
+                    grid[x + i, y].Button.BackColor = Color.Blue;
+                    grid[x + i, y].Button.Text = "1";
+                }
+
+                if (IsValid(x, y, i) && grid[x, y + i] is Block1)
+                {
+                    grid[x, y + i].Button.BackColor = Color.Blue;
+                    grid[x, y + i].Button.Text = "1";
+                }
+
+                if (IsValid(x, y, i) && grid[x + i, y] is Block_2 && grid[x + i, y].Wall == false)
+                {
+                    grid[x + i, y].Button.BackColor = Color.Green;
+                    grid[x + i, y].Button.Text = "2";
+                }
+
+                if (IsValid(x, y, i) && grid[x, y + i] is Block_2 && grid[x, y + i].Wall == false)
+                {
+                    grid[x, y + i].Button.BackColor = Color.Green;
+                    grid[x, y + i].Button.Text = "2";
+                }
+
+                if (IsValid(x, y, i) && grid[x + i, y] is Block_2 && grid[x + i, y].Wall == true)
+                {
+                    grid[x + i, y].Button.BackColor = Color.Blue;
+                    grid[x + i, y].Button.Text = "2";
+                }
+
+                if (IsValid(x, y, i) && grid[x, y + i] is Block_2 && grid[x, y + i].Wall == true)
+                {
+                    grid[x, y + i].Button.BackColor = Color.Blue;
+                    grid[x, y + i].Button.Text = "2";
+                }
+
+                if (IsValid(x, y, i) && grid[x + i, y] is Block_3 && grid[x + i, y].Wall == false)
+                {
+                    grid[x + i, y].Button.BackColor = Color.Green;
+                    grid[x + i, y].Button.Text = "3";
+                }
+
+                if (IsValid(x, y, i) && grid[x, y + i] is Block_3 && grid[x, y + i].Wall == false)
+                {
+                    grid[x, y + i].Button.BackColor = Color.Green;
+                    grid[x, y + i].Button.Text = "3";
+                }
+
+                if (IsValid(x, y, i) && grid[x + i, y] is Block_3 && grid[x + i, y].Wall == true)
+                {
+                    grid[x + i, y].Button.BackColor = Color.Blue;
+                    grid[x + i, y].Button.Text = "3";
+                }
+
+                if (IsValid(x, y, i) && grid[x, y + i] is Block_3 && grid[x, y + i].Wall == true)
+                {
+                    grid[x, y + i].Button.BackColor = Color.Blue;
+                    grid[x, y + i].Button.Text = "3";
+                }
+
+            }
+
+            for (int i = mainPath.FindIndex(t => t.Item1 == x && t.Item2 == y); 0 < i; i--)
+            {
+                Tuple<int, int> tuple = mainPath[i];
+                grid[tuple.Item1, tuple.Item2].Button.BackColor = Color.Yellow;
+            }
+        }
+
+        private bool IsValid(int x, int y, int i)
+        {
+            if (i == -1)
+                return x > 0 && x < rows && y > 0 && y < cols;
+            if (i == 0)
+                return x >= 0 && x < rows && y >= 0 && y < cols;
+
+            if (i == 1)
+                return x >= 0 && x < rows - 1 && y >= 0 && y < cols - 1;
+
+            return x >= 0 && x < rows && y >= 0 && y < cols;
+        }
+
     }
 }
+
 
 
 

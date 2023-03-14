@@ -5,9 +5,9 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using System.Windows.Forms;
 
-namespace WinFormsApp3
+
+namespace maze_form
 {
     internal class grid
     {
@@ -65,7 +65,6 @@ namespace WinFormsApp3
                                     Cells[i, j] = new Block_2();
                                     Cells[i, j].Wall = true;
                                     Cells[i, j + 1] = new Block_2();
-                                    Cells[i, j + 1].Button.BackColor = Color.Green;
                                 }
 
                             if (txt[a] == '3')
@@ -74,9 +73,7 @@ namespace WinFormsApp3
                                     Cells[i, j] = new Block_3();
                                     Cells[i, j].Wall = true;
                                     Cells[i - 1, j] = new Block_3();
-                                    Cells[i - 1, j].Button.BackColor = Color.Green;
                                     Cells[i - 2, j] = new Block_3();
-                                    Cells[i - 2, j].Button.BackColor = Color.Green;
                                 }
                             a++;
                         }
@@ -97,7 +94,7 @@ namespace WinFormsApp3
                 int randomRow = rand.Next(rows);
                 int randomColumn = rand.Next(columns);
 
-                if (Cells[randomRow, randomColumn].Button.Text == "0" && x == 1)
+                if (Cells[randomRow, randomColumn].main && x == 1)
                 {
                     Cells[randomRow, randomColumn].Button.BackColor = Color.Red;
                     Cells[randomRow, randomColumn].Button.Text = "Finish";
@@ -106,7 +103,7 @@ namespace WinFormsApp3
                     x++;
                 }
 
-                if (Cells[randomRow, randomColumn].Button.Text == "0" && x == 0)
+                if (Cells[randomRow, randomColumn].main && x == 0)
                 {
                     Cells[randomRow, randomColumn].Button.BackColor = Color.Blue;
                     Cells[randomRow, randomColumn].Button.Text = "Start";

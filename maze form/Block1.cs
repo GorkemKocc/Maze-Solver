@@ -10,8 +10,7 @@ namespace maze_form
     {
         public Block1()
         {
-            Button.Text = "1";
-            Button.BackColor = Color.Gray;
+            main = false;
         }
 
         public Block1(int row, int col) : base(row, col)

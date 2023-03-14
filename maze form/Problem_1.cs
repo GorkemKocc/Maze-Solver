@@ -7,7 +7,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
-using WinFormsApp3;
+
 
 namespace maze_form
 {
@@ -37,7 +37,7 @@ namespace maze_form
                 List<Tuple<int, int>> path = new List<Tuple<int, int>>();
                 List<Tuple<int, int>> mainPath = new List<Tuple<int, int>>();
                 Robot robot = new Robot(g.Cells, path, mainPath, g.start_X, g.start_Y, g.end_X, g.end_Y, this.Controls);
-                robot.mazeHistory = mazeHistory;
+                robot.gridHistory = mazeHistory;
             };
             Button button = new Button();
             button.Location = new Point(200 + g.columns * 35, 60 + (g.rows * 35) / 2);

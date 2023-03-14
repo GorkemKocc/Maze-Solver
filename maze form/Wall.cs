@@ -5,7 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 using maze_form;
 
-namespace WinFormsApp3
+namespace maze_form
 {
     internal class Wall : Cell
     {
@@ -13,6 +13,7 @@ namespace WinFormsApp3
         {
             Button.Text = "";
             Button.BackColor = Color.Black;
+            main = false;
             Wall = true;
         }
     }

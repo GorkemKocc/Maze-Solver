@@ -10,6 +10,10 @@ namespace maze_form
         public Form1()
         {
             InitializeComponent();
+            FileStream fs = File.Create("maze.txt");
+            fs.Close();
+            fs = File.Create("grid.txt");
+            fs.Close();
         }
 
         private void Form1_Load(object sender, EventArgs e)

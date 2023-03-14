@@ -197,7 +197,6 @@ namespace maze_form
                 item.Button.BackColor = Color.Gray;
             }
 
-            // open entrance and exit walls
             Cells[Start.Item1, Start.Item2].Wall = false;
             Cells[Start.Item1, Start.Item2].Button.BackColor = Color.Green;
             Cells[End.Item1, End.Item2].Wall = false;
@@ -211,7 +210,6 @@ namespace maze_form
             foreach (var item in path)
             {
                 showAround(item.Item1, item.Item2);
-                // Cells[item.Item1, item.Item2].Button.BackColor = Color.Blue;
                 await Task.Delay(delay);
             }
             mainPath.Reverse();

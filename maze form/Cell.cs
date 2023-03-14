@@ -14,6 +14,7 @@ namespace maze_form
         public bool Visited { get; set; }
         public Button Button { get; set; }
         public bool Wall { get; set; }
+        public bool main { get; set; }
 
         public Cell(int row, int col)
         {
@@ -33,8 +34,8 @@ namespace maze_form
 
             Button button = new Button();
             button.Size = new Size(35, 35);
-            button.Text = "0";
-            button.BackColor = Color.White;
+            button.BackColor = Color.Gray;
+            main = true;
             Wall = false;
             Button = button;
         }
