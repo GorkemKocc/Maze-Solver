@@ -38,6 +38,15 @@ namespace maze_form
                 List<Tuple<int, int>> mainPath = new List<Tuple<int, int>>();
                 Robot robot = new Robot(g.Cells, path, mainPath, g.start_X, g.start_Y, g.end_X, g.end_Y, this.Controls);
                 robot.gridHistory = mazeHistory;
+                foreach (var grid in g.Cells)
+                {
+                    if (grid.GetType() != typeof(Wall))
+                    {
+                        grid.Button.BackColor = Color.Gray;
+                        grid.Button.Text = "";
+                    }
+
+                }
             };
             Button button = new Button();
             button.Location = new Point(200 + g.columns * 35, 60 + (g.rows * 35) / 2);

@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.IO;
 using System.Linq;
 using System.Text;
@@ -19,7 +20,7 @@ namespace maze_form
         private bool[,] Visited;
         List<Tuple<int, int>> path = new List<Tuple<int, int>>();
         List<Tuple<int, int>> mainPath = new List<Tuple<int, int>>();
-
+        public Stopwatch stopwatch1 = new Stopwatch();
 
         public Robot(Cell[,] maze, List<Tuple<int, int>> path, List<Tuple<int, int>> mainPath, Tuple<int, int> start, Tuple<int, int> end)
         {
@@ -31,7 +32,9 @@ namespace maze_form
             this.mainPath = mainPath;
             this.Start = start;
             this.End = end;
+            stopwatch1.Start();
             Solve(start.Item1, start.Item2);
+            stopwatch1.Stop();
         }
 
         public bool Solve(int x, int y)
@@ -80,6 +83,7 @@ namespace maze_form
         HashSet<Tuple<int, int>> visited = new HashSet<Tuple<int, int>>();
         Dictionary<Tuple<int, int>, Tuple<int, int>> parent = new Dictionary<Tuple<int, int>, Tuple<int, int>>();
         public System.Windows.Forms.Control.ControlCollection Controls;
+        Stopwatch stopwatch = new Stopwatch();
         public Robot(Cell[,] grid, List<Tuple<int, int>> path, List<Tuple<int, int>> mainPath, int start_X, int start_Y, int end_X, int end_Y, System.Windows.Forms.Control.ControlCollection control)
         {
             this.Controls = control;
@@ -93,7 +97,9 @@ namespace maze_form
             rows = grid.GetLength(0);
             cols = grid.GetLength(1);
             pathTime = 0;
+            stopwatch.Start();
             gridSolve();
+            stopwatch.Stop();
         }
 
         public void gridSolve()
@@ -233,7 +239,7 @@ namespace maze_form
                 grid[end_X, end_Y].Button.Text = "Finish";
                 await Task.Delay(delay / 2);
             }
-            gridHistory.showGridElapsedTime(grid, path, Controls);
+            gridHistory.showGridElapsedTime(grid, path, stopwatch, Controls);
 
         }
         public void showAround(int x, int y)

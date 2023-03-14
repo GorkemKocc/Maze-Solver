@@ -34,7 +34,8 @@ namespace maze_form
 
             Button button = new Button();
             button.Size = new Size(35, 35);
-            button.BackColor = Color.Gray;
+            button.BackColor = Color.White;
+            button.Text = "0";
             main = true;
             Wall = false;
             Button = button;

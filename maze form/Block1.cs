@@ -11,6 +11,8 @@ namespace maze_form
         public Block1()
         {
             main = false;
+            Button.BackColor = Color.Blue;
+            Button.Text = "1";
         }
 
         public Block1(int row, int col) : base(row, col)

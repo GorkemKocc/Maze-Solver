@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.IO;
 using System.Linq;
 using System.Security.Cryptography.X509Certificates;
@@ -25,6 +26,7 @@ namespace maze_form
         private List<Tuple<int, int>> path = new List<Tuple<int, int>>();
         private List<Tuple<int, int>> mainPath = new List<Tuple<int, int>>();
         public History mazeHistory = new History();
+        Stopwatch stopwatch = new Stopwatch();
 
 
         public Maze(int rows, int cols, System.Windows.Forms.Control.ControlCollection control)
@@ -34,7 +36,7 @@ namespace maze_form
             Cols = cols;
             Cells = new Cell[rows, cols];
             Rand = new Random();
-            delay = 170;
+            delay = 250;
             for (int i = 0; i < rows; i++)
             {
                 for (int j = 0; j < cols; j++)
@@ -156,6 +158,10 @@ namespace maze_form
 
             startButton.Click += (sender, args) =>
             {
+                foreach (Cell item in Cells)
+                {
+                    item.Button.BackColor = Color.Gray;
+                }
                 ShowPath();
                 startButton.Enabled = false;
                 finishButton.Enabled = true;
@@ -194,7 +200,6 @@ namespace maze_form
             foreach (Cell item in Cells)
             {
                 Control.Add(item.Button);
-                item.Button.BackColor = Color.Gray;
             }
 
             Cells[Start.Item1, Start.Item2].Wall = false;
@@ -207,6 +212,7 @@ namespace maze_form
         {
             mainPath.Add(new Tuple<int, int>(End.Item1, End.Item2));
             Robot robot = new Robot(Cells, path, mainPath, Start, End);
+            stopwatch = robot.stopwatch1;
             foreach (var item in path)
             {
                 showAround(item.Item1, item.Item2);
@@ -218,7 +224,7 @@ namespace maze_form
                 await Task.Delay(delay / 2);
                 Cells[item.Item1, item.Item2].Button.BackColor = Color.Yellow;
             }
-            mazeHistory.showMazeElapsedTime(Cells, path, Control);
+            mazeHistory.showMazeElapsedTime(Cells, path, stopwatch, Control);
         }
 
         public async void showAround(int x, int y)

@@ -11,6 +11,8 @@ namespace maze_form
     {
         public Block_2()
         {
+            Button.BackColor = Color.Blue;
+            Button.Text = "2";
             main = false;
         }
 
