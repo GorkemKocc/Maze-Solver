@@ -15,8 +15,8 @@ namespace maze_form
         public string text = "";
         public string txt = "";
         public string textfile;
-        public string url1 = @"C:\Users\isgor\OneDrive\Masaüstü\proje\url1.txt";
-        public string url2 = @"C:\Users\isgor\OneDrive\Masaüstü\proje\url2.txt";
+        public string url1 = @"C:\Users\isgor\OneDrive\Masaüstü\maze\url1.txt";
+        public string url2 = @"C:\Users\isgor\OneDrive\Masaüstü\maze\url2.txt";
         public int rows, columns;
         public int start_X = 0, start_Y = 0, end_X = 0, end_Y = 0;
 

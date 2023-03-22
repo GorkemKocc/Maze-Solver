@@ -13,9 +13,9 @@ namespace maze_form
 {
     public partial class Problem_1 : UserControl
     {
-        private string textfile = @"C:\Users\isgor\OneDrive\Masaüstü\proje\url1.txt";
-        private string url1 = @"C:\Users\isgor\OneDrive\Masaüstü\proje\url1.txt";
-        private string url2 = @"C:\Users\isgor\OneDrive\Masaüstü\proje\url2.txt";
+        private string textfile = @"C:\Users\isgor\OneDrive\Masaüstü\maze\url1.txt";
+        private string url1 = @"C:\Users\isgor\OneDrive\Masaüstü\maze\url1.txt";
+        private string url2 = @"C:\Users\isgor\OneDrive\Masaüstü\maze\url2.txt";
         public History mazeHistory = new History();
 
         public Problem_1()
